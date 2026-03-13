@@ -2,7 +2,7 @@ import React,{useEffect,useState} from "react";
 import axios from "axios";
 import { useParams,useNavigate } from "react-router-dom";
 import { Heart,ArrowLeft } from "lucide-react";
-
+import API from "../api"
 export default function PostDetail(){
 
 const {id} = useParams();
@@ -16,7 +16,7 @@ fetchPost();
 
 const fetchPost = async()=>{
 
-const res = await axios.get(`http://localhost:8800/post/one/${id}`);
+const res = await axios.get(`${API}/post/one/${id}`);
 
 setPost(res.data);
 

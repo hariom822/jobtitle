@@ -14,7 +14,7 @@ import {
   Calendar,
   FileText,
 } from "lucide-react";
-
+import API from "../api"
 function JobTypeBadge({ type }) {
   const styles = {
     "Full Time":  "bg-green-50 text-green-700 border border-green-200",
@@ -48,7 +48,7 @@ export default function CompanyJobsPublic() {
 
   const fetchJobs = async () => {
     try {
-      const res = await axios.get(`http://localhost:8800/job/myjobs/${id}`);
+      const res = await axios.get(`${API}/job/myjobs/${id}`);
       setJobs(res.data);
     } catch (err) { console.log(err); }
   };
@@ -56,7 +56,7 @@ export default function CompanyJobsPublic() {
   const fetchApplications = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8800/application/my/${userId}`,
+        `${API}/application/my/${userId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setApplications(res.data);
@@ -79,7 +79,7 @@ export default function CompanyJobsPublic() {
       formData.append("jobId", selectedJob._id);
       formData.append("userId", userId);
       formData.append("resume", resume);
-      await axios.post("http://localhost:8800/application/add", formData, {
+      await axios.post(`${API}/application/add`, formData, {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
       });
       alert("Applied Successfully ✅");
@@ -96,7 +96,7 @@ export default function CompanyJobsPublic() {
 
   const handleRemove = async (applicationId) => {
     try {
-      await axios.delete(`http://localhost:8800/application/delete/${applicationId}`, {
+      await axios.delete(`${API}/application/delete/${applicationId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Application Removed ❌");

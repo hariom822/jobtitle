@@ -10,7 +10,7 @@ Mail,
 MapPin,
 Briefcase
 } from "lucide-react";
-
+import API from "../api"
 export default function JobApplications(){
 
 const {jobId} = useParams();
@@ -26,7 +26,7 @@ fetchApps();
 const fetchApps = async()=>{
 
 const res = await axios.get(
-`http://localhost:8800/application/jobapplications/${jobId}`,
+`${API}/application/jobapplications/${jobId}`,
 {headers:{Authorization:`Bearer ${token}`}}
 );
 
@@ -37,7 +37,7 @@ setApplications(res.data);
 const updateStatus = async(id,status)=>{
 
 await axios.post(
-`http://localhost:8800/application/update/${id}`,
+`${API}/application/update/${id}`,
 {status},
 {headers:{Authorization:`Bearer ${token}`}}
 );
@@ -51,7 +51,7 @@ const deleteApplication = async(id)=>{
 if(!window.confirm("Delete Application?")) return;
 
 await axios.delete(
-`http://localhost:8800/application/delete/${id}`,
+`${API}/application/delete/${id}`,
 {headers:{Authorization:`Bearer ${token}`}}
 );
 

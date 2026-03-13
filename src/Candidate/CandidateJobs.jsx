@@ -7,7 +7,7 @@ import {
   FileText, SlidersHorizontal,
 } from "lucide-react";
 import CandidateSidebar from "./SidebarProfile";
-
+import API from "../api"
 function JobTypeBadge({ type }) {
   const styles = {
     "Full Time":  "bg-green-50 text-green-700 border border-green-200",
@@ -41,14 +41,14 @@ export default function CandidateJobs() {
   useEffect(() => { if (sortType) handleSearch(); }, [sortType]);
 
   const fetchJobs = async () => {
-    const res = await axios.get("http://localhost:8800/job/all");
+    const res = await axios.get(`${API}/job/all`);
     setJobs(res.data);
     setFilteredJobs(res.data);
   };
 
   const fetchApplications = async () => {
     const res = await axios.get(
-      `http://localhost:8800/application/my/${userId}`,
+      `${API}/application/my/${userId}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     setApplications(res.data);
@@ -73,7 +73,7 @@ export default function CandidateJobs() {
     formData.append("jobId", selectedJob._id);
     formData.append("userId", userId);
     formData.append("resume", resume);
-    await axios.post("http://localhost:8800/application/add", formData, {
+    await axios.post(`${API}/application/add`, formData, {
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
     });
     alert("Applied Successfully ✅");
@@ -83,7 +83,7 @@ export default function CandidateJobs() {
   };
 
   const handleRemove = async (applicationId) => {
-    await axios.delete(`http://localhost:8800/application/delete/${applicationId}`, {
+    await axios.delete(`${API}/application/delete/${applicationId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     alert("Application Removed ❌");
@@ -96,10 +96,11 @@ export default function CandidateJobs() {
     <div className="bg-gray-100 min-h-screen pt-16 pb-10 ">
 
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 py-4 mb-6">
-        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
+      <div className="fixed top-16 left-0 w-full z-40">
+      <div className="bg-white border-b border-gray-200 py-4 mb-6 ">
+        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between ">
           <div className="flex items-center gap-3">
-            <Briefcase size={20} className="text-blue-700" />
+            <Briefcase size={20} className="text-blue-400" />
             <h1 className="text-lg font-bold text-gray-800">Available Jobs</h1>
             <span className="bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold px-3 py-0.5 rounded-full">
               {filteredJobs.length} Openings
@@ -114,15 +115,15 @@ export default function CandidateJobs() {
           </button>
         </div>
       </div>
-
+      </div>
       {/* Sidebar + Content */}
       <div className="max-w-6xl mx-auto px-4 flex gap-5 items-start">
-
+       <div className="fixed mt-25">
         {/* LEFT SIDEBAR */}
         <CandidateSidebar />
-
+       </div>
         {/* RIGHT CONTENT */}
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 ml-67 mt-25">
 
           {/* Search Bar */}
           <div className="bg-white border border-gray-200 rounded-lg p-4 mb-5 flex flex-wrap items-center gap-3">
@@ -164,7 +165,7 @@ export default function CandidateJobs() {
             </div>
             <button
               onClick={handleSearch}
-              className="bg-blue-700 hover:bg-blue-800 text-white text-sm font-semibold px-5 py-2 rounded transition"
+              className="bg-blue-400 hover:bg-blue-500 text-white text-sm font-semibold px-5 py-2 rounded transition"
             >
               Search
             </button>
@@ -266,7 +267,7 @@ export default function CandidateJobs() {
                     ) : (
                       <button
                         onClick={() => setSelectedJob(job)}
-                        className="flex items-center gap-1.5 text-xs font-semibold text-white bg-blue-700 hover:bg-blue-800 px-4 py-1.5 rounded transition"
+                        className="flex items-center gap-1.5 text-xs font-semibold text-white bg-blue-400 hover:bg-blue-500 px-4 py-1.5 rounded transition"
                       >
                         <FileText size={13} />
                         Apply Now

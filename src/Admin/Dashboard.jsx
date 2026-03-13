@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import API from "../api"
 export default function Dashboard() {
 
   const [stats, setStats] = useState({
@@ -25,19 +25,19 @@ export default function Dashboard() {
 
     try{
 
-      const jobRes = await axios.get("http://localhost:8800/job/all");
+      const jobRes = await axios.get(`${API}/job/all`);
 
       const appRes = await axios.get(
-        "http://localhost:8800/application/all",
+        `${API}/application/all`,
         {headers:{Authorization:`Bearer ${token}`}}
       );
 
       const candidateRes = await axios.get(
-        "http://localhost:8800/candidate/all"
+        `${API}/candidate/all`
       );
 
       const companyRes = await axios.get(
-        "http://localhost:8800/companie/all"
+        `${API}/companie/all`
       );
 
       const applications = appRes.data;

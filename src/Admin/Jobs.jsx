@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Pencil, Trash2, Plus, Search, Briefcase, MapPin, IndianRupee, SlidersHorizontal, X } from "lucide-react";
-
+import API from "../api"
 export default function Jobs() {
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState("");
@@ -19,7 +19,7 @@ export default function Jobs() {
   const fetchJobs = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:8800/job/all", {
+      const res = await axios.get(`${API}/job/all`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setJobs(res.data);
@@ -36,7 +36,7 @@ export default function Jobs() {
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8800/job/add", formData);
+      await axios.post(`${API}/job/add`, formData);
       fetchJobs();
       setAddOpen(false);
       setFormData({ name: "", description: "", location: "", salary: "" });
@@ -52,7 +52,7 @@ export default function Jobs() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:8800/job/update/${editId}`, formData);
+      await axios.post(`${API}/job/update/${editId}`, formData);
       fetchJobs();
       setFormData({ name: "", description: "", location: "", salary: "" });
       setEditOpen(false);
@@ -62,7 +62,7 @@ export default function Jobs() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this job?")) return;
     try {
-      await axios.delete(`http://localhost:8800/job/delete/${id}`);
+      await axios.delete(`${API}/job/delete/${id}`);
       fetchJobs();
     } catch (err) { alert("Delete Failed"); }
   };

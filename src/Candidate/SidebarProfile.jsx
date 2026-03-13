@@ -5,7 +5,7 @@ import {
   Mail, Phone, Camera, UserCircle2, ChevronRight, Briefcase,
   Building2, FileText, LogOut,
 } from "lucide-react";
-
+import API from "../api"
 export default function CandidateSidebar() {
   const [candidate, setCandidate] = useState(null);
   const [fullInfo, setFullInfo] = useState(null);
@@ -22,7 +22,7 @@ export default function CandidateSidebar() {
   const fetchData = async () => {
     try {
       const userRes = await axios.get(
-        `http://localhost:8800/users/oneuser/${userId}`,
+        `${API}/users/oneuser/${userId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const user = userRes.data.user;
@@ -30,7 +30,7 @@ export default function CandidateSidebar() {
       const email = user?.email;
       if (email) {
         const fullRes = await axios.get(
-          `http://localhost:8800/fullinfo/oneemail/${email}`,
+          `${API}/fullinfo/oneemail/${email}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setFullInfo(fullRes.data.full);
@@ -52,7 +52,7 @@ export default function CandidateSidebar() {
     formData.append("candidateId", candidateId);
     try {
       const res = await axios.post(
-        "http://localhost:8800/fullinfo/upload-profile",
+        `${API}/fullinfo/upload-profile`,
         formData,
         { headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" } }
       );
@@ -64,7 +64,6 @@ export default function CandidateSidebar() {
     }
   };
 
-  // Profile completion percentage (simple calc)
   const profileFields = [
     candidate?.name, candidate?.email, candidate?.phone,
     fullInfo?.profileImage, fullInfo?.skills, fullInfo?.resume,
@@ -73,11 +72,11 @@ export default function CandidateSidebar() {
   const percent = Math.round((filled / profileFields.length) * 100);
 
   return (
-    <div className="w-64 flex-shrink-0 ">
+    <div className="w-64 flex-shrink-0  ">
       <div className="bg-white border border-gray-200 rounded-lg overflow-hidden sticky top-20">
 
         {/* Top blue banner */}
-        <div className="h-16 bg-blue-700" />
+        <div className="h-16 bg-blue-400" />
 
         {/* Profile Image */}
         <div className="px-5 pb-4 relative">
@@ -116,7 +115,7 @@ export default function CandidateSidebar() {
         <div className="px-5 pb-4 border-t border-gray-100 pt-3">
           <div className="flex justify-between items-center mb-1">
             <span className="text-xs font-semibold text-gray-600">Profile Completion</span>
-            <span className="text-xs font-bold text-blue-700">{percent}%</span>
+            <span className="text-xs font-bold text-blue-500">{percent}%</span>
           </div>
           <div className="w-full bg-gray-100 rounded-full h-1.5">
             <div
@@ -133,7 +132,7 @@ export default function CandidateSidebar() {
         <div className="px-5 pb-4">
           <button
             onClick={() => navigate("/fullprofile")}
-            className="w-full flex items-center justify-center gap-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold px-4 py-2 rounded transition"
+            className="w-full flex items-center justify-center gap-2 bg-blue-400 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded transition"
           >
             <UserCircle2 size={14} />
             Complete Profile

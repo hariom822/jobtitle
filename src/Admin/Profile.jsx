@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import API from "../api"
 export default function Profile() {
 
 const navigate = useNavigate();
@@ -40,7 +40,7 @@ try{
 const token = localStorage.getItem("token");
 
 const res = await axios.get(
-`http://localhost:8800/users/oneuser/${id}`,
+`${API}/users/oneuser/${id}`,
 {
 headers:{
 Authorization:`Bearer ${token}`
@@ -76,7 +76,7 @@ try{
 const token = localStorage.getItem("token");
 
 await axios.post(
-`http://localhost:8800/users/update/${id}`,
+`${API}/users/update/${id}`,
 updatedata,
 {
 headers:{

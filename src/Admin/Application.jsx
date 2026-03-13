@@ -1,174 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-// import { Trash2, Pencil, CheckCircle, XCircle } from "lucide-react";
-
-// export default function Application() {
-
-//   const [applications, setApplications] = useState([]);
-//   const [filteredStatus, setFilteredStatus] = useState("all");
-//   const [search, setSearch] = useState("");
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState("");
-
-//   const token = localStorage.getItem("token");
-
-//   const fetchApplications = async () => {
-//     try {
-//       setLoading(true);
-//       const res = await axios.get("http://localhost:8800/application/all", {
-//         headers: { Authorization: `Bearer ${token}` }
-//       });
-//       console.log("applications", res.data);
-//       setApplications(res.data);
-//       console.log("applications", res.data);
-//       setError("");
-//     } catch (err) {
-//       setError("Failed to fetch applications");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchApplications();
-//   }, []);
-
-//   const handleDelete = async (id) => {
-//     try {
-//       await axios.delete(`http://localhost:8800/application/delete/${id}`);
-//       fetchApplications();
-//     } catch (err) {
-//       alert("Delete Failed");
-//     }
-//   };
-
-//   const updateStatus = async (id, status) => {
-//     try {
-//       await axios.post(
-//         `http://localhost:8800/application/update/${id}`,
-//         { status }
-//       );
-//       fetchApplications();
-//     } catch (err) {
-//       alert("Status Update Failed");
-//     }
-//   };
-
-//   // ================= FILTERING =================
-//   const filteredApplications = applications
-//     .filter(app =>
-//       filteredStatus === "all" ? true : app.status === filteredStatus
-//     )
-//     .filter(app =>
-//       app.jobId?.name?.toLowerCase().includes(search.toLowerCase())
-//     );
-
-//   const pendingCount = applications.filter(a => a.status === "pending").length;
-//   const acceptedCount = applications.filter(a => a.status === "accepted").length;
-//   const rejectedCount = applications.filter(a => a.status === "rejected").length;
-
-//   return (
-//     <div className=" p-6 bg-gray-100 min-h-screen">
-
-//       <h1 className="text-3xl font-bold mb-6">Application Management</h1>
-
-//       {/* ===== STATUS BUTTONS ===== */}
-//       <div className="flex gap-4 mb-6">
-//         <button
-//           onClick={() => setFilteredStatus("pending")}
-//           className="bg-yellow-500 text-white px-4 py-2 rounded"
-//         >
-//           Pending ({pendingCount})
-//         </button>
-
-//         <button
-//           onClick={() => setFilteredStatus("accepted")}
-//           className="bg-green-600 text-white px-4 py-2 rounded"
-//         >
-//           Accepted ({acceptedCount})
-//         </button>
-
-//         <button
-//           onClick={() => setFilteredStatus("rejected")}
-//           className="bg-red-600 text-white px-4 py-2 rounded"
-//         >
-//           Rejected ({rejectedCount})
-//         </button>
-
-//         <button
-//           onClick={() => setFilteredStatus("all")}
-//           className="bg-gray-600 text-white px-4 py-2 rounded"
-//         >
-//           All
-//         </button>
-//       </div>
-
-//       {/* ===== SEARCH ===== */}
-//       <input
-//         type="text"
-//         placeholder="Search by Job Name..."
-//         className="p-2 border rounded w-1/3 mb-4"
-//         value={search}
-//         onChange={(e) => setSearch(e.target.value)}
-//       />
-
-//       {loading && <p>Loading...</p>}
-//       {error && <p className="text-red-500">{error}</p>}
-
-//       {/* ===== TABLE ===== */}
-//       <div className="bg-white shadow rounded-lg overflow-hidden">
-//         <table className="w-full">
-//           <thead className="bg-gray-200">
-//             <tr>
-//               <th className="p-3">User</th>
-//               <th className="p-3">Job</th>
-//               <th className="p-3">Status</th>
-//               <th className="p-3">Applied At</th>
-//               <th className="p-3">Actions</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {filteredApplications.map((app) => (
-//               <tr key={app._id} className="border-t">
-//                 <td className="p-3">{app.userId?.name}</td>
-//                 <td className="p-3">{app.jobId?.name}</td>
-//                 <td className="p-3 capitalize">{app.status}</td>
-//                 <td className="p-3">
-//                   {new Date(app.appliedAt).toLocaleDateString()}
-//                 </td>
-
-//                 <td className="p-3 flex gap-3">
-
-//                   {/* Accept */}
-//                   <CheckCircle
-//                     size={18}
-//                     className="text-green-600 cursor-pointer"
-//                     onClick={() => updateStatus(app._id, "accepted")}
-//                   />
-
-//                   {/* Reject */}
-//                   <XCircle
-//                     size={18}
-//                     className="text-red-600 cursor-pointer"
-//                     onClick={() => updateStatus(app._id, "rejected")}
-//                   />
-
-//                   {/* Delete */}
-//                   <Trash2
-//                     size={18}
-//                     className="text-gray-700 cursor-pointer"
-//                     onClick={() => handleDelete(app._id)}
-//                   />
-
-//                 </td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       </div>
-//     </div>
-//   );
-// }
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -186,7 +15,7 @@ import {
   IndianRupee,
   Calendar,
 } from "lucide-react";
-
+import API from "../api"
 function JobTypeBadge({ type }) {
   const styles = {
     "Full Time":  "bg-green-50 text-green-700 border border-green-200",
@@ -221,7 +50,7 @@ export default function CompanyJobs() {
   const fetchJobs = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8800/job/all`,
+        `${API}/job/all`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setJobs(res.data);
@@ -274,9 +103,9 @@ export default function CompanyJobs() {
         companyid: companieId,
       };
       if (editId) {
-        await axios.post(`http://localhost:8800/job/update/${editId}`, payload, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.post(`${API}/job/update/${editId}`, payload, { headers: { Authorization: `Bearer ${token}` } });
       } else {
-        await axios.post("http://localhost:8800/job/add", payload, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.post(`${API}/job/add`, payload, { headers: { Authorization: `Bearer ${token}` } });
       }
       setLoading(false);
       setOpen(false);
@@ -291,7 +120,7 @@ export default function CompanyJobs() {
   const deleteJob = async (id) => {
     if (!window.confirm("Delete this job?")) return;
     try {
-      await axios.delete(`http://localhost:8800/job/delete/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.delete(`${API}/job/delete/${id}`, { headers: { Authorization: `Bearer ${token}` } });
       fetchJobs();
     } catch (err) { console.log(err); }
   };

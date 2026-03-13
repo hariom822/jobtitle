@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import API from "./api"
 export default function ForgetPassword() {
   const [step, setStep] = useState(1);
 
@@ -23,7 +23,7 @@ export default function ForgetPassword() {
     setMsg("");
 
     try {
-      const res = await fetch("http://localhost:8800/users/otp", {
+      const res = await fetch(`${API}/users/otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email })
@@ -54,7 +54,7 @@ export default function ForgetPassword() {
     }
 
     try {
-      const res = await fetch("http://localhost:8800/users/forget", {
+      const res = await fetch(`${API}/users/forget`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

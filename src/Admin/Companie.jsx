@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Pencil, Trash2, Plus, Search, Building2, X, SlidersHorizontal } from "lucide-react";
-
+import API from "../api"
 export default function Companie() {
 
   const initialState = {
@@ -24,7 +24,7 @@ export default function Companie() {
   const fetchCompanies = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:8800/companie/all", {
+      const res = await axios.get(`${API}/companie/all`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const filterdata = res.data.filter(x => x.status === "approved");
@@ -42,7 +42,7 @@ export default function Companie() {
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8800/companie/add", formData);
+      await axios.post(`${API}/companie/add`, formData);
       fetchCompanies();
       setAddOpen(false);
       setFormData(initialState);
@@ -58,7 +58,7 @@ export default function Companie() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:8800/companie/update/${editId}`, formData);
+      await axios.post(`${API}/companie/update/${editId}`, formData);
       fetchCompanies();
       setEditOpen(false);
       setFormData(initialState);
@@ -68,7 +68,7 @@ export default function Companie() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this company?")) return;
     try {
-      await axios.delete(`http://localhost:8800/companie/delete/${id}`);
+      await axios.delete(`${API}/companie/delete/${id}`);
       fetchCompanies();
     } catch (err) { alert("Delete Failed"); }
   };

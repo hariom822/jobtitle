@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Search, Building2, MapPin, X, Plus, Globe, Phone, Mail, Lock } from "lucide-react";
-
+import API from "../api"
 export default function AllCompanies() {
 
   const [companies, setCompanies] = useState([]);
@@ -24,7 +24,7 @@ export default function AllCompanies() {
 
   const fetchCompanies = async () => {
     try {
-      const res = await axios.get("http://localhost:8800/companie/all");
+      const res = await axios.get(`${API}/companie/all`);
       const filterdata = res.data.filter(x => x.status === "approved");
       setCompanies(filterdata);
       setFiltered(filterdata);
@@ -49,7 +49,7 @@ export default function AllCompanies() {
       return;
     }
     try {
-      await axios.post("http://localhost:8800/companie/add", form);
+      await axios.post(`${API}/companie/add`, form);
       alert("Company Created Successfully");
       setOpen(false);
       setForm({ companiename:"", email:"", phone:"", password:"", companydescription:"", companyaddress:"", website:"", logo:"", userId:"" });

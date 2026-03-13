@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { User, Mail, Phone, Lock, IndianRupee, CreditCard, Upload } from "lucide-react";
-
+import API from "../api"
 export default function EmployeeSignup(){
 
 const [data,setData] = useState({
@@ -49,7 +49,7 @@ formData.append("profileimage",profileimage);
 formData.append("addherimage",addherimage);
 
 await axios.post(
-"http://localhost:8800/employe/",
+`${API}/employe/`,
 formData,
 {
 headers:{

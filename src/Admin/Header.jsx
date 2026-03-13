@@ -6,7 +6,7 @@ import {
   Users, BookOpen, Clock, LogOut, User, ChevronDown,
   Newspaper,
 } from "lucide-react";
-
+import API from "../api"
 export default function Header() {
   const [userdata, setUserdata] = useState(null);
   const [openUser, setOpenUser] = useState(false);
@@ -27,7 +27,7 @@ export default function Header() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        `http://localhost:8800/users/oneuser/${id}`,
+        `${API}/users/oneuser/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setUserdata(res.data.user);
@@ -152,8 +152,10 @@ export default function Header() {
       </div>
 
       {/* ── Admin Sub-Nav ── */}
+      
       {role === "admin" && (
-        <div className="fixed top-14 left-0 w-full z-40 bg-white border-b border-gray-200">
+        <div className="p-5">
+        <div className="fixed top-14 left-0 w-full z-40 bg-white border-b border-gray-200 mb-10">
           <div className="max-w-7xl mx-auto px-6 flex items-center gap-1 overflow-x-auto">
             {adminLinks.map(({ label, path, icon: Icon }) => {
               const active = location.pathname === path;
@@ -173,7 +175,9 @@ export default function Header() {
             })}
           </div>
         </div>
+        </div>
       )}
+      
     </>
   );
 }

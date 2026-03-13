@@ -1,230 +1,8 @@
-// import React,{useEffect,useState} from "react";
-// import axios from "axios";
-// import { Trash2, Edit, Heart, MessageCircle } from "lucide-react";
-
-// export default function MyPost(){
-
-// const [posts,setPosts] = useState([]);
-// const [editOpen,setEditOpen] = useState(null);
-// const [editText,setEditText] = useState("");
-
-// const token = localStorage.getItem("token");
-// const userId = localStorage.getItem("userId");
-
-// useEffect(()=>{
-// fetchPosts();
-// },[]);
-
-// const fetchPosts = async()=>{
-
-// const res = await axios.get(
-// `http://localhost:8800/post/all`,
-// {headers:{Authorization:`Bearer ${token}`}}
-// );
-
-// setPosts(res.data);
-
-// };
-
-// const deletePost = async(postId)=>{
-// const id=postId;
-// await axios.delete(
-// `http://localhost:8800/post/delete/${id}`
-// );
-
-// fetchPosts();
-
-// };
-
-// const updatePost = async(id)=>{
-
-// await axios.post(
-// `http://localhost:8800/post/update/${id}`,
-// {
-// description:editText
-// }
-// );
-
-// setEditOpen(null);
-// fetchPosts();
-
-// };
-
-// const deleteComment = async(id)=>{
-
-// await axios.delete(
-// `http://localhost:8800/commant/delete/${id}`
-// );
-
-// fetchPosts();
-
-// };
-
-// return(
-
-// <div className="p-8 bg-gray-100 min-h-screen mt-16">
-
-// <h1 className="text-3xl font-bold mb-8">
-// My Posts
-// </h1>
-
-// <div className="grid gap-8">
-
-// {posts.map(post=>(
-
-// <div key={post._id} className="bg-white shadow-lg rounded-xl overflow-hidden">
-
-// {/* IMAGE */}
-
-// {post.Image &&(
-
-// <img
-// src={post.Image}
-// alt=""
-// className="w-full h-80 object-cover"
-// />
-
-// )}
-
-// <div className="p-6">
-
-// <h2 className="text-xl font-bold mb-2">
-// {post.title}
-// </h2>
-
-// <p className="text-gray-700 mb-4">
-// {post.description}
-// </p>
-
-// {/* ACTION BUTTONS */}
-
-// <div className="flex gap-4 mb-4">
-
-// <button
-// onClick={()=>deletePost(post._id)}
-// className="flex items-center gap-2 text-red-600"
-// >
-// <Trash2 size={18}/>
-// Delete
-// </button>
-
-// <button
-// onClick={()=>{
-// setEditOpen(post._id);
-// setEditText(post.description);
-// }}
-// className="flex items-center gap-2 text-blue-600"
-// >
-// <Edit size={18}/>
-// Edit
-// </button>
-
-// </div>
-
-// {/* LIKES */}
-
-// <div className="border-t pt-3 mb-4">
-
-// <p className="flex items-center gap-2 font-semibold">
-
-// <Heart size={18}/>
-// Likes ({post.likes.length})
-
-// </p>
-
-// <div className="ml-6 mt-2">
-
-// {post.likes?.map((u)=>(
-// <p key={u._id} className="text-sm text-gray-600">
-// {u.name}
-// </p>
-// ))}
-
-// </div>
-
-// </div>
-
-// {/* COMMENTS */}
-
-// <div className="border-t pt-3">
-
-// <p className="flex items-center gap-2 font-semibold mb-2">
-
-// <MessageCircle size={18}/>
-// Comments
-
-// </p>
-
-// {post.Comment?.map((c)=>(
-
-// <div key={c._id} className="flex justify-between items-center bg-gray-100 p-2 rounded mb-2">
-
-// <div>
-
-// <span className="font-semibold">
-// {c.userId?.name} :
-// </span>
-
-// <span className="ml-2">
-// {c.text}
-// </span>
-
-// </div>
-
-// <button
-// onClick={()=>deleteComment(c._id)}
-// className="text-red-500 text-sm"
-// >
-// Delete
-// </button>
-
-// </div>
-
-// ))}
-
-// </div>
-
-// {/* EDIT BOX */}
-
-// {editOpen===post._id &&(
-
-// <div className="mt-4">
-
-// <textarea
-// value={editText}
-// onChange={(e)=>setEditText(e.target.value)}
-// className="border p-2 w-full mb-2"
-// />
-
-// <button
-// onClick={()=>updatePost(post._id)}
-// className="bg-blue-600 text-white px-4 py-1 rounded"
-// >
-// Update
-// </button>
-
-// </div>
-
-// )}
-
-// </div>
-
-// </div>
-
-// ))}
-
-// </div>
-
-// </div>
-
-// );
-
-// }
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Trash2, Edit, Heart, MessageCircle, X, Check } from "lucide-react";
-
+import API from "../api"
 export default function MyPost() {
   const [posts, setPosts] = useState([]);
   const [editOpen, setEditOpen] = useState(null);
@@ -237,25 +15,25 @@ export default function MyPost() {
 
   const fetchPosts = async () => {
     const res = await axios.get(
-      `http://localhost:8800/post/all`,
+      `${API}/post/all`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     setPosts(res.data);
   };
 
   const deletePost = async (postId) => {
-    await axios.delete(`http://localhost:8800/post/delete/${postId}`);
+    await axios.delete(`${API}/post/delete/${postId}`);
     fetchPosts();
   };
 
   const updatePost = async (id) => {
-    await axios.post(`http://localhost:8800/post/update/${id}`, { description: editText });
+    await axios.post(`${API}/post/update/${id}`, { description: editText });
     setEditOpen(null);
     fetchPosts();
   };
 
   const deleteComment = async (id) => {
-    await axios.delete(`http://localhost:8800/commant/delete/${id}`);
+    await axios.delete(`${API}/commant/delete/${id}`);
     fetchPosts();
   };
 

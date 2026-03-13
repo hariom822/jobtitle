@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { CheckCircle, XCircle, Trash2, Building2, Mail, Phone, X } from "lucide-react";
-
+import API from "../api"
 const STATUS_TABS = [
   { key: "all",      label: "All" },
   { key: "pending",  label: "Pending" },
@@ -28,7 +28,7 @@ export default function CompaniesAdmin() {
   const fetchCompanies = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:8800/companie/all");
+      const res = await axios.get(`${API}/companie/all`);
       setCompanies(res.data);
       setFiltered(res.data);
     } catch (err) { console.log(err); }
@@ -43,7 +43,7 @@ export default function CompaniesAdmin() {
 
   const handleApprove = async (id) => {
     try {
-      await axios.post(`http://localhost:8800/companie/update/${id}`, { status: "approved" });
+      await axios.post(`${API}/companie/update/${id}`, { status: "approved" });
       fetchCompanies();
     } catch { alert("Approve Failed"); }
   };
@@ -52,7 +52,7 @@ export default function CompaniesAdmin() {
 
   const handleReject = async () => {
     try {
-      await axios.post(`http://localhost:8800/companie/panding/${selectedId}`, { status: "rejected", rejectReason });
+      await axios.post(`${API}/companie/panding/${selectedId}`, { status: "rejected", rejectReason });
       setRejectOpen(false);
       setRejectReason("");
       fetchCompanies();
@@ -62,7 +62,7 @@ export default function CompaniesAdmin() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this company?")) return;
     try {
-      await axios.delete(`http://localhost:8800/companie/delete/${id}`);
+      await axios.delete(`${API}/companie/delete/${id}`);
       fetchCompanies();
     } catch { alert("Delete Failed"); }
   };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Pencil, Trash2, Search, Users, X, Mail, Phone } from "lucide-react";
-
+import API from "../api"
 export default function Candidate() {
   const [candidates, setCandidates] = useState([]);
   const [search, setSearch] = useState("");
@@ -14,7 +14,7 @@ export default function Candidate() {
 
   const fetchCandidates = async () => {
     try {
-      const res = await axios.get("http://localhost:8800/candidate/all", {
+      const res = await axios.get(`${API}/candidate/all`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCandidates(res.data);
@@ -24,7 +24,7 @@ export default function Candidate() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this candidate?")) return;
     try {
-      await axios.delete(`http://localhost:8800/candidate/delete/${id}`, {
+      await axios.delete(`${API}/candidate/delete/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchCandidates();
@@ -40,7 +40,7 @@ export default function Candidate() {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:8800/candidate/update/${selectedCandidate._id}`,
+        `${API}/candidate/update/${selectedCandidate._id}`,
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );

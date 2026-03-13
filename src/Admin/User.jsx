@@ -2,7 +2,7 @@ import axios from "axios";
 // import { tr } from "framer-motion/client";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import API from "../api"
 export default function User() 
  {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export default function User()
   const loginuser=async()=>{
     try {
       const token = localStorage.getItem("token");
-    const usrdata=await axios.get(`http://localhost:8800/users/oneuser/${id}`, {
+    const usrdata=await axios.get(`${API}/users/oneuser/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`, 
       },

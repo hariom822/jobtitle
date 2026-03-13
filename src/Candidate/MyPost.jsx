@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Trash2, Edit, Heart, MessageCircle, X, Check } from "lucide-react";
-
+import API from "../api"
 export default function MyPost() {
   const [posts, setPosts] = useState([]);
   const [editOpen, setEditOpen] = useState(null);
@@ -14,25 +14,25 @@ export default function MyPost() {
 
   const fetchPosts = async () => {
     const res = await axios.get(
-      `http://localhost:8800/post/user/${userId}`,
+      `${API}/post/user/${userId}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     setPosts(res.data);
   };
 
   const deletePost = async (postId) => {
-    await axios.delete(`http://localhost:8800/post/delete/${postId}`);
+    await axios.delete(`${API}/post/delete/${postId}`);
     fetchPosts();
   };
 
   const updatePost = async (id) => {
-    await axios.post(`http://localhost:8800/post/update/${id}`, { description: editText });
+    await axios.post(`${API}/post/update/${id}`, { description: editText });
     setEditOpen(null);
     fetchPosts();
   };
 
   const deleteComment = async (id) => {
-    await axios.delete(`http://localhost:8800/commant/delete/${id}`);
+    await axios.delete(`${API}/commant/delete/${id}`);
     fetchPosts();
   };
 

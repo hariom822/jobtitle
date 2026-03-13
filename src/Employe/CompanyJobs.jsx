@@ -14,7 +14,7 @@ import {
   IndianRupee,
   Calendar,
 } from "lucide-react";
-
+import API from "../api"
 function JobTypeBadge({ type }) {
   const styles = {
     "Full Time":  "bg-green-50 text-green-700 border border-green-200",
@@ -49,7 +49,7 @@ export default function CompanyJobs() {
   const fetchJobs = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8800/job/myjobs/${companieId}`,
+        `${API}/job/myjobs/${companieId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setJobs(res.data);
@@ -102,9 +102,9 @@ export default function CompanyJobs() {
         companyid: companieId,
       };
       if (editId) {
-        await axios.post(`http://localhost:8800/job/update/${editId}`, payload, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.post(`${API}/job/update/${editId}`, payload, { headers: { Authorization: `Bearer ${token}` } });
       } else {
-        await axios.post("http://localhost:8800/job/add", payload, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.post(`${API}/job/add`, payload, { headers: { Authorization: `Bearer ${token}` } });
       }
       setLoading(false);
       setOpen(false);
@@ -119,7 +119,7 @@ export default function CompanyJobs() {
   const deleteJob = async (id) => {
     if (!window.confirm("Delete this job?")) return;
     try {
-      await axios.delete(`http://localhost:8800/job/delete/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.delete(`${API}/job/delete/${id}`, { headers: { Authorization: `Bearer ${token}` } });
       fetchJobs();
     } catch (err) { console.log(err); }
   };

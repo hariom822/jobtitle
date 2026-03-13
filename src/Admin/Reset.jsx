@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import API from "../api"
 const Reset = () => {
   const navigate = useNavigate();
    const email=localStorage.getItem("email")
@@ -42,7 +42,7 @@ const Reset = () => {
         setLoading(true);
 
         const res = await axios.post(
-          "http://localhost:8800/users/reset",
+          `${API}/users/reset`,
           data
         );
 

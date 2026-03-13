@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import API from "../api"
 export default function EmployeeDashboard(){
 
 return(

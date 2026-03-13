@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Heart, MessageCircle, Share2, Plus, X, Image, Tag, Send } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+import API from "../api"
 export default function Post() {
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
@@ -23,13 +23,13 @@ export default function Post() {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:8800/users/all");
+      const res = await axios.get(`${API}/users/all`);
       setUsers(res.data.users);
     } catch (err) { console.log(err); }
   };
 
   const fetchPosts = async () => {
-    const res = await axios.get("http://localhost:8800/post/all", {
+    const res = await axios.get(`${API}/post/all`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     setPosts(res.data);
@@ -52,7 +52,7 @@ export default function Post() {
     formData.append("userId", userId);
     formData.append("image", image);
     formData.append("tags", JSON.stringify(selectedUsers));
-    await axios.post("http://localhost:8800/post/add", formData, {
+    await axios.post(`${API}/post/add`, formData, {
       headers: { Authorization: `Bearer ${token}` },
     });
     setOpen(false);
@@ -61,12 +61,12 @@ export default function Post() {
   };
 
   const handleLike = async (postId) => {
-    await axios.post(`http://localhost:8800/post/like/${postId}`, { userId });
+    await axios.post(`${API}/post/like/${postId}`, { userId });
     fetchPosts();
   };
 
   const handleComment = async (postId) => {
-    await axios.post(`http://localhost:8800/commant/comment/${postId}`, { userId, text: commentText });
+    await axios.post(`${API}/commant/comment/${postId}`, { userId, text: commentText });
     setCommentText("");
     setCommentOpen(null);
     fetchPosts();

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API from "../api"
 export default function FullProfile() {
 
   const candidateId = localStorage.getItem("candidateId");
@@ -46,7 +47,7 @@ export default function FullProfile() {
     try {
       console.log("Fetching full info for infoId:", infoId);
       const res = await axios.get(
-        `http://localhost:8800/fullinfo/one/${infoId}`,
+        `${API}/fullinfo/one/${infoId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
      console.log("fetched full info", res.data);
@@ -102,7 +103,7 @@ export default function FullProfile() {
 
   try {
     await axios.post(
-      `http://localhost:8800/fullinfo/delete-profile/${infoId}`,
+      `${API}/fullinfo/delete-profile/${infoId}`,
       { skill },
       {
         headers: { Authorization: `Bearer ${token}` }
@@ -125,7 +126,7 @@ export default function FullProfile() {
 
   try {
     await axios.post(
-      `http://localhost:8800/fullinfo/delete-profile/${infoId}`,
+      `${API}/fullinfo/delete-profile/${infoId}`,
       { experienceId: expId },
       {
         headers: { Authorization: `Bearer ${token}` }
@@ -149,7 +150,7 @@ export default function FullProfile() {
       console.log("infoId:", infoId);
       // always use the generic save route – it will create if missing or update existing
       const res = await axios.post(
-        `http://localhost:8800/fullinfo/update/${infoId}`,
+        `${API}/fullinfo/update/${infoId}`,
         modalForm,
         {
           headers: {
@@ -200,7 +201,6 @@ export default function FullProfile() {
         setModalForm({ name: '' });
       }
     } else if (type === 'additional') {
-      // index holds field name
       const field = index;
       setModalForm({ field, value: formData[field] || '' });
     }
@@ -219,7 +219,7 @@ export default function FullProfile() {
         dateOfBirth: modalForm.dateOfBirth,
         gender: modalForm.gender
       }));
-    } else if (modalType === 'education') {///removeExperience 
+    } else if (modalType === 'education') {
       setFormData(prev => ({
         ...prev,
         education: { ...prev.education, ...modalForm }
@@ -269,7 +269,7 @@ const editSkill = async (index) => {
   try {
 
     await axios.post(
-      `http://localhost:8800/fullinfo/edit-profile/${infoId}`,
+      `${API}/fullinfo/edit-profile/${infoId}`,
       {
         index,
         skill: modalForm.name
@@ -291,7 +291,7 @@ const editExperience = async (index) => {
   try {
 
     await axios.post(
-      `http://localhost:8800/fullinfo/edit-profile/${infoId}`,
+      `${API}/fullinfo/edit-profile/${infoId}`,
       {
         experienceId: formData.experience[index]._id,
         ...modalForm
@@ -313,7 +313,7 @@ const handleFieldDelete = async (field) => {
     setLoading(true);
 
     await axios.post(
-      `http://localhost:8800/fullinfo/delete-profile/${infoId}`,
+      `${API}/fullinfo/delete-profile/${infoId}`,
       { field },   // ✅ sirf field bhejna hai
       {
         headers: { Authorization: `Bearer ${token}` }

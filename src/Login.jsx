@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import API from "./api"
 export default function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [loading,setLoading]=useState(false)
   const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -14,10 +15,13 @@ export default function Login() {
 
  const handleSubmit = async (e) => {
   e.preventDefault();
+  setLoading(true)
   try {
-    const res = await axios.post("http://localhost:8800/users/login", formData);
+    console.log(formData);
+    console.log(API)
+    const res = await axios.post(`${API}/users/login`, formData);
     console.log(res.data);
-
+    setLoading(false)
     localStorage.setItem("token", res.data.token);
     localStorage.setItem("role", res.data.role);
     localStorage.setItem("userId", res.data.id);
@@ -39,6 +43,7 @@ export default function Login() {
   } catch (error) {
     console.log(error);
     alert("Login Failed ❌");
+    setLoading(false)
   }
 };
 
@@ -70,9 +75,10 @@ export default function Login() {
 
           <button
             type="submit"
+            disabled={loading}
             className="w-full bg-indigo-600 text-white font-semibold py-3 rounded-lg hover:bg-indigo-700 transition duration-300"
           >
-            Login
+             {loading ? "Login Account..." : "Login"}
           </button>
         </form>
         <button onClick={() => navigate("/forget")} className="text-indigo-600 font-semibold ml-20 underline">

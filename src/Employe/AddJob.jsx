@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import axios from "axios";
 import { X,Briefcase,MapPin,IndianRupee,Clock } from "lucide-react";
-
+import API from "../api"
 export default function AddJob({companyId,onClose,onSuccess}){
 
 const token = localStorage.getItem("token");
@@ -26,8 +26,7 @@ e.preventDefault();
 
 try{
 
-await axios.post(
-"http://localhost:8800/job",
+await axios.post(`${API}/job`,
 {
 ...form,
 skills:form.skills.split(","),

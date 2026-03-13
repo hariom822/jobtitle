@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from "react";
 import axios from "axios";
-
+import API from "../api"
 export default function CompanyProfile(){
 
 const companyId = localStorage.getItem("companyId");
@@ -23,7 +23,7 @@ const fetchCompany = async()=>{
 try{
 
 const res = await axios.get(
-`http://localhost:8800/company/${companyId}`,
+`${API}/company/${companyId}`,
 {headers:{Authorization:`Bearer ${token}`}}
 );
 
@@ -44,7 +44,7 @@ const handleUpdate = async()=>{
 try{
 
 await axios.put(
-`http://localhost:8800/company/update/${companyId}`,
+`${API}/company/update/${companyId}`,
 data,
 {headers:{Authorization:`Bearer ${token}`}}
 );
