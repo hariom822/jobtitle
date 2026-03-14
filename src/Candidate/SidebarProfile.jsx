@@ -142,9 +142,8 @@ export default function CandidateSidebar() {
         {/* Navigation Links */}
         <div className="border-t border-gray-100">
           {[
-            { icon: Briefcase, label: "Available Jobs", path: "/candidatejobs" },
+            { icon: Briefcase, label: "My Post", path: "/mypost" },
             { icon: Building2, label: "Browse Companies", path: "/candidate/allcompanies" },
-            { icon: FileText, label: "My Applications", path: "/candidate/applications" },
           ].map(({ icon: Icon, label, path }) => (
             <button
               key={path}

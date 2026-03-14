@@ -141,8 +141,8 @@ export default function Companie() {
 
         {/* Table */}
         {!loading && (
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-            <table className="w-full text-sm">
+          <div className="bg-white border border-gray-200 rounded-lg overflow-x-auto">
+           <table className="min-w-[900px] w-full text-sm">
               <thead>
                 <tr className="bg-gray-50 border-b border-gray-200">
                   {["Company", "Email", "Phone", "Website", "Description", "Address", "Actions"].map(h => (
