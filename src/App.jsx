@@ -93,7 +93,7 @@ function App() {
           </ProtectedRoute>
         } />
          <Route path="/company/jobapplications/:jobId" element={
-          <ProtectedRoute allowedRoles={["admin"]}>
+          <ProtectedRoute allowedRoles={["admin", "companie"]}>
              <JobApplications/>
           </ProtectedRoute>
         } />
@@ -137,21 +137,13 @@ function App() {
              <CompanyJobs/>
           </ProtectedRoute>
         } />
-         <Route path="/company/jobapplications/:jobId" element={
-          <ProtectedRoute allowedRoles={["companie"]}>
-             <JobApplications/>
-          </ProtectedRoute>
-        } />
+        
          <Route path="/company/company" element={
           <ProtectedRoute allowedRoles={["companie"]}>
              <CompanyProfile/>
           </ProtectedRoute>
         } />
-         {/* <Route path="/company/addjob" element={
-          <ProtectedRoute allowedRoles={["companie"]}>
-             <AddJob/>
-          </ProtectedRoute>
-        } /> */}
+        
 
         </Routes>
         
