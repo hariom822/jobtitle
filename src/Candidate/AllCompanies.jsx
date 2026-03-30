@@ -49,7 +49,9 @@ export default function AllCompanies() {
       return;
     }
     try {
-      await axios.post(`${API}/companie/add`, form);
+       console.log(form)
+     const data= await axios.post(`${API}/companie/add`, form);
+     console.log(data)
       alert("Company Created Successfully");
       setOpen(false);
       setForm({ companiename:"", email:"", phone:"", password:"", companydescription:"", companyaddress:"", website:"", logo:"", userId:"" });

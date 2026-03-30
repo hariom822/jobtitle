@@ -22,6 +22,7 @@ import EmployeeDashboard from './Employe/EmployeeDashboard'
 import CompanyJobs from './Employe/CompanyJobs'
 import JobApplications from './Employe/JobApplications'
 import CompanyProfile from './Employe/CompanyProfile'
+import Adminnotification from "./Admin/Adminnotification"
 // import AddJob from './Employe/AddJob'
 import Signupemployee from './Employe/Signupemployee'
 import AllCompanies from './Candidate/AllCompanies'
@@ -31,6 +32,7 @@ import MyPost from './Candidate/MyPost'
 import Alladitpost from './Admin/Alladitpost'
 import PostDetail from './Candidate/PostDetail'
 import PendingCompanies from './Admin/PendingCompanies'
+import FullJob from './Candidate/FullJob'
 function App() {
     const location = useLocation();
     const hideHeaderFooter = location.pathname === '/login' || location.pathname === '/signup'
@@ -65,6 +67,11 @@ function App() {
          <Route path="/candidate" element={
           <ProtectedRoute allowedRoles={["admin"]}>
              <Condidate/>
+         </ProtectedRoute>
+        } />
+         <Route path="/notifation" element={
+          <ProtectedRoute allowedRoles={["admin","candidate","companie"]}>
+             <Adminnotification/>
          </ProtectedRoute>
         } />
          <Route path="/panding" element={
@@ -105,6 +112,11 @@ function App() {
           <Route path="/candidate/allcompanies" element={  
           <ProtectedRoute allowedRoles={["candidate"]}>
               <AllCompanies/>
+            </ProtectedRoute>
+          } />
+           <Route path="/candidate/fulljob/:id" element={  
+          <ProtectedRoute allowedRoles={["candidate"]}>
+              <FullJob/>
             </ProtectedRoute>
           } />
           <Route path="/candidate/companyjobs/:id" element={  

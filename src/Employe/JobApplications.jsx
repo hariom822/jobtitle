@@ -50,8 +50,7 @@ const deleteApplication = async(id)=>{
 
 if(!window.confirm("Delete Application?")) return;
 
-await axios.delete(
-`${API}/application/delete/${id}`,
+await axios.delete(`${API}/application/delete/${id}`,
 {headers:{Authorization:`Bearer ${token}`}}
 );
 

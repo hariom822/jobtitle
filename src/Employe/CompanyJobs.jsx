@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Plus,
   Briefcase,
@@ -13,6 +14,7 @@ import {
   X,
   IndianRupee,
   Calendar,
+  Newspaper,
 } from "lucide-react";
 import API from "../api"
 function JobTypeBadge({ type }) {
@@ -45,7 +47,7 @@ export default function CompanyJobs() {
   });
 
   useEffect(() => { fetchJobs(); }, []);
-
+  const navigate=useNavigate()
   const fetchJobs = async () => {
     try {
       const res = await axios.get(
@@ -133,15 +135,25 @@ export default function CompanyJobs() {
       <div className="bg-white border-b border-gray-200 py-4 mb-6">
         <div className="max-w-5xl mx-auto px-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Briefcase size={20} className="text-blue-700" />
+            <Briefcase size={20} className="text-blue-400" />
             <h1 className="text-lg font-bold text-gray-800">Manage Job Postings</h1>
-            <span className="bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold px-3 py-0.5 rounded-full">
+            <span className="bg-blue-50 text-blue-400 border border-blue-200 text-xs font-semibold px-3 py-0.5 rounded-full">
               {jobs.length} Active
             </span>
           </div>
+           <button
+              onClick={() => navigate("/post")}
+              className={`flex items-center gap-1.5 text-sm font-semibold px-4 py-1.5 rounded transition border
+                ${location.pathname === "/post"
+                  ? "bg-blue-400 hover:bg-blue-500 text-white"
+                  : "bg-blue-400 hover:bg-blue-500 text-white"}`}
+            >
+              <Newspaper size={14} />
+              All Posts
+            </button>
           <button
             onClick={openAdd}
-            className="flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white text-sm font-semibold px-5 py-2 rounded transition"
+            className="flex items-center gap-2 bg-blue-400 hover:bg-blue-500 text-white text-sm font-semibold px-5 py-2 rounded transition"
           >
             <Plus size={15} />
             Post a Job

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Search, MapPin, IndianRupee, Briefcase, Building2,
   Upload, X, CheckCircle, Users, GraduationCap, Calendar,
-  FileText, SlidersHorizontal,
+  FileText, SlidersHorizontal,Newspaper,
 } from "lucide-react";
 
 import CandidateSidebar from "./SidebarProfile";
@@ -174,7 +174,17 @@ export default function CandidateJobs() {
               </span>
 
             </div>
-
+            
+             <button
+              onClick={() => navigate("/post")}
+              className={`flex items-center gap-1.5 text-sm font-semibold px-4 py-1.5 rounded transition border
+                ${location.pathname === "/post"
+                  ? "bg-blue-700 text-white border-blue-700"
+                  : "border-blue-600 text-blue-700 hover:bg-blue-50"}`}
+            >
+              <Newspaper size={14} />
+              All Posts
+            </button>
             <button
               onClick={() => navigate("/candidate/allcompanies")}
               className="flex items-center gap-2 border border-blue-600 text-blue-700 hover:bg-blue-50 text-sm font-semibold px-5 py-2 rounded transition"
@@ -310,13 +320,14 @@ export default function CandidateJobs() {
 
                 <div
                   key={job._id}
+                   onClick={() => navigate(`/candidate/fulljob/${job._id}`)}
                   className="bg-white border border-gray-200 rounded-lg hover:shadow-md transition p-5"
                 >
 
                   <div className="flex items-start justify-between mb-2">
 
                     <h2 className="text-base font-bold text-blue-700">
-                      {job.name}
+                      {job.title}
                     </h2>
 
                     <div className="flex items-center gap-2">
