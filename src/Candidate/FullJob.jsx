@@ -99,10 +99,6 @@ export default function FullJob() {
                 Available Jobs
               </h1>
 
-              <span className="bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold px-3 py-0.5 rounded-full">
-                {filteredJobs.length} Openings
-              </span>
-
             </div>
 
         </div>
