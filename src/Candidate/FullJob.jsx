@@ -83,20 +83,27 @@ export default function FullJob() {
       <div className="fixed top-16 left-0 w-full z-40 bg-white border-b py-4">
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
 
-          <div className="flex items-center gap-3">
+         <div className="flex items-center gap-3">
 
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="lg:hidden text-xl"
-            >
-              ☰
-            </button>
+              {/* MOBILE MENU */}
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="lg:hidden text-gray-700 text-xl"
+              >
+                ☰
+              </button>
 
-            <h1 className="text-lg font-bold text-gray-800">
-              Job Details
-            </h1>
+              <Briefcase size={20} className="text-blue-400" />
 
-          </div>
+              <h1 className="text-lg font-bold text-gray-800">
+                Available Jobs
+              </h1>
+
+              <span className="bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold px-3 py-0.5 rounded-full">
+                {filteredJobs.length} Openings
+              </span>
+
+            </div>
 
         </div>
       </div>
